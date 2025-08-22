@@ -163,7 +163,7 @@ const SchoolTable = () => {
     dispatch(addPayloadData({ name: 'editSchool', data: row }))
   }
 
-  const onView = (row: SchoolType) => router.push(`/school/${row?._id}/course`)
+  const onView = (row: SchoolType) => router.push(`/admin/school/${row?._id}/academic`)
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -189,7 +189,7 @@ const SchoolTable = () => {
             <CustomTextField
               value={filter?.search ?? ''}
               onChange={e => onChangeFilter({ name: 'search', value: e.target.value })}
-              placeholder='Search User'
+              placeholder='Search School'
               className='max-sm:is-full'
             />
             {/* <CustomTextField

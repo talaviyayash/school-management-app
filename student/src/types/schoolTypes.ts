@@ -1,5 +1,12 @@
 import type { PaginationApiType } from './tableTypes'
 
+export type PrincipalType = {
+  _id: string
+  name: string
+  email: string
+  role: 'principal'
+}
+
 export type SchoolType = {
   _id: string
   name: string
@@ -28,4 +35,13 @@ export interface ApiSchoolsListResponse {
     school: SchoolType[]
     pagination: PaginationApiType
   }
+}
+export type SchoolWithPrincipal = SchoolType & {
+  principalId: PrincipalType
+}
+
+export interface ApiSchoolResponse {
+  success: boolean
+  message: string
+  school: SchoolWithPrincipal
 }

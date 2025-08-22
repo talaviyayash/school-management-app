@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/errorHandler.middleware";
 import { PORT } from "./config/env";
 import { authRouter } from "./router/auth.router";
 import { schoolRouter } from "./router/school.router";
+import { courseRouter } from "./router/course.router";
 
 db();
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/school", schoolRouter);
+app.use("/api/course", courseRouter);
 
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms ")

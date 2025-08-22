@@ -85,7 +85,7 @@ const getSchoolList: RequestHandler = async (req, res) => {
 
   res.status(200).json({
     success: true,
-    message: "Division retrieved successfully.",
+    message: "School retrieved successfully.",
     data: {
       school,
       pagination: {
@@ -98,4 +98,25 @@ const getSchoolList: RequestHandler = async (req, res) => {
   });
 };
 
-export { createSchool, getSchoolList, editSchool };
+const getSchool: RequestHandler = async (req, res) => {
+  const { schoolId } = req.params;
+  const school = await School.findById(schoolId).populate(
+    "principalId",
+    "name email role"
+  );
+
+  if (!school) {
+    res.status(404).json({
+      success: true,
+      message: "School not found.",
+    });
+    return;
+  }
+  res.status(200).json({
+    success: true,
+    message: "School retrieved successfully.",
+    school,
+  });
+};
+
+export { createSchool, getSchoolList, editSchool, getSchool };
