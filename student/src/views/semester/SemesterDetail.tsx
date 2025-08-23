@@ -33,20 +33,6 @@ const SemesterDetail = ({ semesterInfo }: { semesterInfo: SemesterType }) => {
               ))}
             </Grid>
           </div>
-          <div className='flex gap-4 justify-center'>
-            {/* <OpenDialogOnElementClick
-              element={Button}
-              elementProps={buttonProps('Edit', 'primary', 'contained')}
-              dialog={EditUserInfo}
-              dialogProps={{ data: userData }}
-            />
-            <OpenDialogOnElementClick
-              element={Button}
-              elementProps={buttonProps('Suspend', 'error', 'tonal')}
-              dialog={ConfirmationDialog}
-              dialogProps={{ type: 'suspend-account' }}
-            /> */}
-          </div>
         </CardContent>
       </Card>
     </>
