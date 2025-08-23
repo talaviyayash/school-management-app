@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { editSchool } from "../controllers/school.controller";
+import { editCourse, getCourse } from "../controllers/course.controller";
 import { validateRequest } from "../utils/validateRequest";
 import { editCourseSchema } from "../validations/course.validation";
 
 const courseRouter = Router();
 
-courseRouter.put("/:courseId", validateRequest(editCourseSchema), editSchool);
+courseRouter.put("/:courseId", validateRequest(editCourseSchema), editCourse);
+courseRouter.get("/:courseId", getCourse);
 
 export { courseRouter };

@@ -1,13 +1,16 @@
 'use client'
 import { useEffect, useState } from 'react'
 
+import { useParams } from 'next/navigation'
+
 import useApiHook from '@/hooks/useApiHook'
 import type { ApiSchoolResponse, SchoolWithPrincipal } from '@/types/schoolTypes'
 import SchoolDetails from './SchoolDetail'
 import SchoolTab from './SchoolTab'
 
-const SchoolAcademic = ({ schoolId }: { schoolId: string }) => {
+const SchoolAcademic = () => {
   const { api } = useApiHook()
+  const { schoolId } = useParams()
   const [schoolInfo, setSchoolInfo] = useState<undefined | SchoolWithPrincipal>()
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const SchoolAcademic = ({ schoolId }: { schoolId: string }) => {
   return (
     <>
       <SchoolDetails schoolInfo={schoolInfo} />
-      <SchoolTab schoolId={schoolId} />
+      <SchoolTab />
     </>
   )
 }

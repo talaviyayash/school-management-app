@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { useParams } from 'next/navigation'
+
 import { Button, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import type { SubmitHandler } from 'react-hook-form'
 import { Controller, useForm } from 'react-hook-form'
@@ -20,7 +22,9 @@ const defaultValues = {
   name: ''
 }
 
-const AddCourse = ({ schoolId }: { schoolId: string }) => {
+const AddCourse = () => {
+  const { schoolId } = useParams()
+
   const addCourseModal = useSelector(getModal('addCourse'))
   const dispatch = useDispatch()
   const { api } = useApiHook()

@@ -12,6 +12,11 @@ import {
   createSchoolSchema,
   editSchoolSchema,
 } from "../validations/school.validation";
+import {
+  createTeacher,
+  getTeacherList,
+} from "../controllers/teacher.controller";
+import { createTeacherSchema } from "../validations/teacher.validation";
 
 const schoolRouter = Router();
 
@@ -20,6 +25,12 @@ schoolRouter.get("/", getSchoolList);
 schoolRouter.put("/:schoolId", validateRequest(editSchoolSchema), editSchool);
 schoolRouter.get("/:schoolId", getSchool);
 schoolRouter.get("/:schoolId/course", getCourseList);
+schoolRouter.get("/:schoolId/teacher", getTeacherList);
+schoolRouter.post(
+  "/:schoolId/teacher",
+  validateRequest(createTeacherSchema),
+  createTeacher
+);
 schoolRouter.post(
   "/:schoolId/course",
   validateRequest(createCourseSchema),
