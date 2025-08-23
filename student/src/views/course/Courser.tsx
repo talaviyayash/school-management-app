@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react'
 
 import { useParams } from 'next/navigation'
 
+import { Stack } from '@mui/material'
+
 import useApiHook from '@/hooks/useApiHook'
-import CourserDetail from './CourserDetail'
 import type { ApiCourseResponse, CourseType } from './courseType'
+import CourserDetail from './CourserDetail'
+import SemesterTable from './semester/SemesterTable'
 
 const Courser = () => {
   const { api } = useApiHook()
@@ -31,9 +34,10 @@ const Courser = () => {
   }
 
   return (
-    <>
+    <Stack spacing={4}>
       <CourserDetail courseInfo={courseInfo} />
-    </>
+      <SemesterTable />
+    </Stack>
   )
 }
 
