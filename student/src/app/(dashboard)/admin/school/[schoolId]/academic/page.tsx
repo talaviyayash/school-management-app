@@ -1,13 +1,19 @@
+'use client'
+
 import React from 'react'
+
+import { useParams } from 'next/navigation'
 
 import SchoolAcademic from '@/views/schoolAcademic/SchoolAcademic'
 
-const page = () => {
+const Page = () => {
+  const { schoolId } = useParams()
+
   return (
     <>
-      <SchoolAcademic />
+      <SchoolAcademic schoolId={schoolId as string} />
     </>
   )
 }
 
-export default page
+export default Page
