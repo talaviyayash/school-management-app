@@ -108,7 +108,7 @@ const getCourse: RequestHandler = async (req, res) => {
 
   res.status(201).json({
     success: true,
-    message: "Course updated successfully",
+    message: "Course retrieved successfully",
     course,
   });
 };

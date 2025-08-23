@@ -6,7 +6,7 @@ const semesterSchema: Schema<ISemester> = new Schema(
     name: {
       type: String,
       required: true,
-      trim: true, // e.g., "Sem 1"
+      trim: true,
     },
     course: {
       type: mongoose.Schema.Types.ObjectId,

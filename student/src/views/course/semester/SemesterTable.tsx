@@ -14,12 +14,13 @@ import { addFlag } from '@/store/slice/appSlice'
 import { addPayloadData } from '@/store/slice/dataSlice'
 import { toggleModal } from '@/store/slice/modalSlice'
 import type { DescriptionItem } from '@/types/tableTypes'
-import type { ApiTeacherListResponse, TeacherListResponse, TeacherType } from '@/types/teacherTypes'
+import { formateDate } from '@/utils/date'
 import { getApiData, getFlag, getLoader } from '@/utils/reduxFunc'
-import AddTeacher from './addTeacher/AddTeacher'
-import EditTeacher from './editTeacher/EditTeacher'
+import AddSemester from './AddSemester'
+import EditSemester from './EditSemester'
+import type { ApiSemesterListResponse, SemesterListResponse, SemesterType } from './semesterType'
 
-const description: DescriptionItem<TeacherType>[] = [
+const description: DescriptionItem<SemesterType>[] = [
   {
     headerName: 'Name',
     Cell: ({ row }) => (
@@ -29,13 +30,10 @@ const description: DescriptionItem<TeacherType>[] = [
     )
   },
   {
-    headerName: 'Email',
-    Cell: ({ row }) => (
-      <Typography color='text.primary' className='font-medium'>
-        {row.email}
-      </Typography>
-    )
+    headerName: 'UPDATED AT',
+    Cell: ({ row }) => <Typography>{formateDate(row.updatedAt) ?? '-'}</Typography>
   },
+
   {
     headerName: 'ACTION',
     Cell: ({ row, allFunction }) => {
@@ -55,8 +53,8 @@ const description: DescriptionItem<TeacherType>[] = [
   }
 ]
 
-const TeacherTable = () => {
-  const { schoolId } = useParams()
+const SemesterTable = () => {
+  const { courseId } = useParams()
   const router = useRouter()
 
   const [filter, setFilter] = useState({
@@ -66,10 +64,10 @@ const TeacherTable = () => {
 
   const { api } = useApiHook()
 
-  const refetchTeacher: boolean | undefined = useSelector(getFlag('teacherList'))
+  const refetchSemester: boolean | undefined = useSelector(getFlag('semesterList'))
 
-  const { pagination, teacher: teacherList }: TeacherListResponse = useSelector(getApiData('teacherList')) || {}
-  const loader = useSelector(getLoader('teacherList'))
+  const { pagination, semester: semesterList }: SemesterListResponse = useSelector(getApiData('semesterList')) || {}
+  const loader = useSelector(getLoader('semesterList'))
 
   const dispatch = useDispatch()
 
@@ -79,10 +77,10 @@ const TeacherTable = () => {
   )
 
   const getData = async (page: number) => {
-    const response = await api<ApiTeacherListResponse>({
-      endPoint: `/school/${schoolId}/teacher`,
+    const response = await api<ApiSemesterListResponse>({
+      endPoint: `/course/${courseId}/semester`,
       needLoader: true,
-      loaderName: 'teacherList',
+      loaderName: 'semesterList',
       params: {
         page: page,
         search: filter?.search || undefined
@@ -92,12 +90,12 @@ const TeacherTable = () => {
     if (response?.success) {
       dispatch(
         addData({
-          name: 'teacherList',
+          name: 'semesterList',
           data: response?.data
         })
       )
     } else {
-      dispatch(addData({ name: 'teacherList', data: {} }))
+      dispatch(addData({ name: 'semesterList', data: {} }))
     }
   }
 
@@ -110,31 +108,31 @@ const TeacherTable = () => {
   }, [filter])
 
   useEffect(() => {
-    if (refetchTeacher) {
-      dispatch(addFlag({ name: 'teacherList', value: false }))
+    if (refetchSemester) {
+      dispatch(addFlag({ name: 'semesterList', value: false }))
       getData(1)
     }
-  }, [refetchTeacher])
+  }, [refetchSemester])
 
-  const onAddCourseClick = () => dispatch(toggleModal({ name: 'addTeacher' }))
+  const onAddCourseClick = () => dispatch(toggleModal({ name: 'addSemester' }))
 
-  const onEdit = (row: TeacherType) => {
-    dispatch(toggleModal({ name: 'editTeacher' }))
-    dispatch(addPayloadData({ name: 'editTeacher', data: row }))
+  const onEdit = (row: SemesterType) => {
+    dispatch(toggleModal({ name: 'editSemester' }))
+    dispatch(addPayloadData({ name: 'editSemester', data: row }))
   }
 
-  const onView = (row: TeacherType) => router.push(`/admin/teacher/${row._id}`)
+  const onView = (row: SemesterType) => router.push(`/admin/course/${row._id}`)
 
   return (
     <>
       <Card>
-        <CardHeader title='Filters' className='pbe-4' />
+        <CardHeader title='Semester Table' className='pbe-4' />
         <div className='flex justify-end flex-col items-start md:flex-row md:items-center p-6 border-bs gap-4'>
           <div className='flex flex-col sm:flex-row max-sm:is-full items-start sm:items-center gap-4'>
             <CustomTextField
               value={filter?.search ?? ''}
               onChange={e => onChangeFilter({ name: 'search', value: e.target.value })}
-              placeholder='Search Teacher'
+              placeholder='Search Semester'
               className='max-sm:is-full'
             />
 
@@ -144,13 +142,13 @@ const TeacherTable = () => {
               className='max-sm:is-full'
               onClick={onAddCourseClick}
             >
-              Add New Teacher
+              Add New Semester
             </Button>
           </div>
         </div>
         <DataTable
           description={description}
-          tableData={teacherList || []}
+          tableData={semesterList || []}
           pagination={pagination ? { ...pagination, setPageIndex: value => getData(value) } : undefined}
           isLoading={loader}
           allFunction={{
@@ -159,10 +157,10 @@ const TeacherTable = () => {
           }}
         />
       </Card>
-      <AddTeacher />
-      <EditTeacher />
+      <AddSemester />
+      <EditSemester />
     </>
   )
 }
 
-export default TeacherTable
+export default SemesterTable

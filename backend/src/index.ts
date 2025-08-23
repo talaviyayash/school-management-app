@@ -10,6 +10,7 @@ import { authRouter } from "./router/auth.router";
 import { schoolRouter } from "./router/school.router";
 import { courseRouter } from "./router/course.router";
 import { teacherRouter } from "./router/teacher.router";
+import { semRouter } from "./router/sem.router";
 
 db();
 
@@ -30,6 +31,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/school", schoolRouter);
 app.use("/api/course", courseRouter);
 app.use("/api/teacher", teacherRouter);
+app.use("/api/semester", semRouter);
 
 app.use(errorHandler);
 
