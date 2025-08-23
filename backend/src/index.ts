@@ -9,6 +9,7 @@ import { PORT } from "./config/env";
 import { authRouter } from "./router/auth.router";
 import { schoolRouter } from "./router/school.router";
 import { courseRouter } from "./router/course.router";
+import { teacherRouter } from "./router/teacher.router";
 
 db();
 
@@ -21,14 +22,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms ")
+);
 
 app.use("/api/auth", authRouter);
 app.use("/api/school", schoolRouter);
 app.use("/api/course", courseRouter);
-
-app.use(
-  morgan(":method :url :status :res[content-length] - :response-time ms ")
-);
+app.use("/api/teacher", teacherRouter);
 
 app.use(errorHandler);
 
