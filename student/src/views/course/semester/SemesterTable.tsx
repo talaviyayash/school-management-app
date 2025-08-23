@@ -121,7 +121,7 @@ const SemesterTable = () => {
     dispatch(addPayloadData({ name: 'editSemester', data: row }))
   }
 
-  const onView = (row: SemesterType) => router.push(`/admin/course/${row._id}`)
+  const onView = (row: SemesterType) => router.push(`/admin/semester/${row._id}`)
 
   return (
     <>

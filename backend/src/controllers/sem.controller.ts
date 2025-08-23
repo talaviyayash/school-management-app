@@ -98,4 +98,18 @@ const editSemester: RequestHandler = async (req, res) => {
   });
 };
 
-export { createSemester, getSemesterList, editSemester };
+const getSemester: RequestHandler = async (req, res) => {
+  const { semId } = req.params;
+
+  const semester = await Semester.findById(semId)
+    .populate("school", "name _id")
+    .populate("course", "name _id");
+
+  res.status(201).json({
+    success: true,
+    message: "Semester retrieved successfully",
+    semester,
+  });
+};
+
+export { createSemester, getSemesterList, editSemester, getSemester };
