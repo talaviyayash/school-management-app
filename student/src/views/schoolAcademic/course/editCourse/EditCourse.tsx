@@ -16,12 +16,10 @@ import { getData, getLoader, getModal } from '@/utils/reduxFunc'
 
 interface FormValues {
   name: string
-  address: string
 }
 
 const defaultValues = {
-  name: '',
-  address: ''
+  name: ''
 }
 
 const EditCourse = () => {
@@ -58,15 +56,14 @@ const EditCourse = () => {
     })
 
     if (response?.success) {
-      dispatch(addFlag({ name: 'schoolList', value: true }))
+      dispatch(addFlag({ name: 'courseList', value: true }))
       onClose()
     }
   }
 
-  const handleReset = () => onClose()
-
   useEffect(() => {
     if (editCourseData) {
+      console.log('editCourseData', editCourseData)
       reset({
         name: editCourseData?.name
       })
@@ -110,30 +107,12 @@ const EditCourse = () => {
                 />
               )}
             />
-            <Controller
-              name='address'
-              control={control}
-              rules={{
-                required: 'Address is required',
-                minLength: { value: 2, message: 'Min 2 characters' }
-              }}
-              render={({ field }) => (
-                <CustomTextField
-                  {...field}
-                  label='Address'
-                  placeholder='Address'
-                  fullWidth
-                  error={!!errors.address}
-                  helperText={errors.address?.message}
-                />
-              )}
-            />
 
             <div className='flex items-center gap-4'>
               <Button variant='contained' type='submit' disabled={loader}>
                 Save
               </Button>
-              <Button variant='tonal' color='error' type='reset' onClick={() => handleReset()}>
+              <Button variant='tonal' color='error' type='reset' onClick={() => onClose()}>
                 Cancel
               </Button>
             </div>

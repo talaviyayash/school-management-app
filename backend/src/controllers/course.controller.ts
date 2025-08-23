@@ -79,4 +79,38 @@ const createCourse: RequestHandler = async (req, res) => {
   });
 };
 
-export { getCourseList, createCourse };
+const editCourse: RequestHandler = async (req, res) => {
+  const { name } = req.body;
+  const { courseId } = req.params;
+
+  const course = await Course.findByIdAndUpdate(
+    courseId,
+    {
+      name,
+    },
+    { new: true, runValidators: true }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: "Course updated successfully",
+    course,
+  });
+};
+
+const getCourse: RequestHandler = async (req, res) => {
+  const { courseId } = req.params;
+
+  const course = await Course.findByIdAndUpdate(courseId).populate(
+    "school",
+    "name address"
+  );
+
+  res.status(201).json({
+    success: true,
+    message: "Course updated successfully",
+    course,
+  });
+};
+
+export { getCourseList, createCourse, editCourse, getCourse };

@@ -1,19 +1,25 @@
-import React, { useState } from 'react'
 import type { SyntheticEvent } from 'react'
+import { useState } from 'react'
 
-import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
 import TabPanel from '@mui/lab/TabPanel'
 import Grid from '@mui/material/Grid2'
+import Tab from '@mui/material/Tab'
 
 import CustomTabList from '@core/components/mui/TabList'
-import CourseTable from '../course/CourseTable'
+import CourseTable from './course/CourseTable'
+import TeacherTable from './teacher/TeacherTable'
 
-const SchoolTab = ({ schoolId }: { schoolId: string }) => {
-  const [activeTab, setActiveTab] = useState('course')
+const tabContentList = {
+  course: <CourseTable />,
+  teacher: <TeacherTable />
+}
+
+const SchoolTab = () => {
+  const [activeTab, setActiveTab] = useState<'teacher' | 'course'>('course')
 
   const handleChange = (event: SyntheticEvent, value: string) => {
-    setActiveTab(value)
+    setActiveTab(value as 'teacher' | 'course')
   }
 
   return (
@@ -34,8 +40,7 @@ const SchoolTab = ({ schoolId }: { schoolId: string }) => {
           </Grid>
           <Grid size={{ xs: 12 }}>
             <TabPanel value={activeTab} className='p-0'>
-              {/* {tabContentList[activeTab]} */}
-              <CourseTable schoolId={schoolId} />
+              {tabContentList[activeTab]}
             </TabPanel>
           </Grid>
         </Grid>

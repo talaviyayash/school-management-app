@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
+import { useParams, useRouter } from 'next/navigation'
+
 import { Button, Card, CardHeader, IconButton, Typography } from '@mui/material'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +18,7 @@ import { getApiData, getFlag, getLoader } from '@/utils/reduxFunc'
 import { formateDate } from '@/utils/date'
 import AddCourse from './addCourse/AddCourse'
 import { addPayloadData } from '@/store/slice/dataSlice'
+import EditCourse from './editCourse/EditCourse'
 
 const description: DescriptionItem<CourseType>[] = [
   {
@@ -50,7 +53,10 @@ const description: DescriptionItem<CourseType>[] = [
   }
 ]
 
-const CourseTable = ({ schoolId }: { schoolId: string }) => {
+const CourseTable = () => {
+  const { schoolId } = useParams()
+  const router = useRouter()
+
   const [filter, setFilter] = useState({
     search: '',
     status: ''
@@ -80,8 +86,6 @@ const CourseTable = ({ schoolId }: { schoolId: string }) => {
         search: filter?.search || undefined
       }
     })
-
-    console.log('response', response)
 
     if (response?.success) {
       dispatch(
@@ -117,6 +121,8 @@ const CourseTable = ({ schoolId }: { schoolId: string }) => {
     dispatch(addPayloadData({ name: 'editCourse', data: row }))
   }
 
+  const onView = (row: CourseType) => router.push(`/admin/course/${row._id}`)
+
   return (
     <>
       <Card>
@@ -146,11 +152,13 @@ const CourseTable = ({ schoolId }: { schoolId: string }) => {
           pagination={pagination ? { ...pagination, setPageIndex: value => getData(value) } : undefined}
           isLoading={loader}
           allFunction={{
-            onEdit
+            onEdit,
+            onView
           }}
         />
       </Card>
-      <AddCourse schoolId={schoolId} />
+      <AddCourse />
+      <EditCourse />
     </>
   )
 }
