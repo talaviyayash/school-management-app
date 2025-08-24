@@ -126,7 +126,7 @@ const BatchTable = () => {
   return (
     <>
       <Card>
-        <CardHeader title='Filters' className='pbe-4' />
+        <CardHeader title='Batch Table' className='pbe-4' />
         <div className='flex justify-end flex-col items-start md:flex-row md:items-center p-6 border-bs gap-4'>
           <div className='flex flex-col sm:flex-row max-sm:is-full items-start sm:items-center gap-4'>
             <CustomTextField

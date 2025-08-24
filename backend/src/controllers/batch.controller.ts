@@ -98,18 +98,18 @@ const editBatch: RequestHandler = async (req, res) => {
   });
 };
 
-const getSemester: RequestHandler = async (req, res) => {
-  const { semId } = req.params;
+const getBatch: RequestHandler = async (req, res) => {
+  const { batchId } = req.params;
 
-  const semester = await Semester.findById(semId)
+  const batch = await Batch.findById(batchId)
     .populate("school", "name _id")
-    .populate("course", "name _id");
+    .populate("semester", "name _id");
 
   res.status(201).json({
     success: true,
-    message: "Semester retrieved successfully",
-    semester,
+    message: "Batch retrieved successfully",
+    batch,
   });
 };
 
-export { createBatch, editBatch, getSemester, getBatchList };
+export { createBatch, editBatch, getBatch, getBatchList };
