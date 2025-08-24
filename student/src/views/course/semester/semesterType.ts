@@ -9,13 +9,6 @@ export type SemesterType = {
   updatedAt: string
 }
 
-export interface Pagination {
-  page: number
-  rows: number
-  size: number
-  total: number
-}
-
 export interface SemesterListResponse {
   semester: SemesterType[]
   pagination: PaginationApiType
