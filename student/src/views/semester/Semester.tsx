@@ -8,6 +8,7 @@ import { Stack } from '@mui/material'
 import useApiHook from '@/hooks/useApiHook'
 import type { ApiSemesterResponse, SemesterType } from './semesterType'
 import SemesterDetail from './SemesterDetail'
+import BatchTable from './batch/BatchTable'
 
 const Semester = () => {
   const { api } = useApiHook()
@@ -35,6 +36,7 @@ const Semester = () => {
   return (
     <Stack spacing={4}>
       <SemesterDetail semesterInfo={semesterInfo} />
+      <BatchTable />
     </Stack>
   )
 }

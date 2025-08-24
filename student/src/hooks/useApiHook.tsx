@@ -34,7 +34,7 @@ interface ApiProps {
   }
 }
 
-type ApiSuccess<T> = (T & { success: true }) | { message: string; success: false }
+type ApiSuccess<T> = (T & { success: true; message?: string }) | { message: string; success: false }
 
 const useApiHook = () => {
   const dispatch = useDispatch()
